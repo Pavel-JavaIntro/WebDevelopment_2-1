@@ -37,6 +37,7 @@ public abstract class Appliance {
     }
     return false;
   }
+
   public String findValueByName(String parameterName) {
     return parameters.get(parameterName);
   }
