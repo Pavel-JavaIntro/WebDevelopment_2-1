@@ -31,7 +31,7 @@ public class Main {
 
 
     Criterion falseCriterion = new Criterion("Unexisting");
-    criterion.add("Something", "Nothing");
+    falseCriterion.add("Something", "Nothing");
     List<Appliance> appliances1;
     try {
       appliances1 = searcher.find(falseCriterion);
