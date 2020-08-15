@@ -1,6 +1,6 @@
-package by.pavka.wd21.appliance;
+package by.pavka.wd21.entity;
 
-import by.pavka.wd21.exception.ApplianceException;
+import by.pavka.wd21.entity.exception.ApplianceException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,8 +8,14 @@ import java.util.Map;
 public abstract class Appliance {
   private final Map<String, String> parameters = new HashMap<>();
 
+  Appliance() {
+    for (String name : listParameterNames()) {
+      parameters.put(name, "");
+    }
+  }
+
   Appliance(String... parameterValues) throws ApplianceException {
-    if (parameterValues == null || parameterValues.length == 0) {
+    if (parameterValues == null) {
       for (String name : listParameterNames()) {
         parameters.put(name, "");
       }
@@ -21,10 +27,6 @@ public abstract class Appliance {
         parameters.put(listParameterNames()[i], parameterValues[i]);
       }
     }
-  }
-
-  public String name() {
-    return getClass().getSimpleName();
   }
 
   public abstract String[] listParameterNames();
@@ -48,5 +50,10 @@ public abstract class Appliance {
       throw new ApplianceException("Parameter name does not exist");
     }
     parameters.put(parameterName, parameterValue);
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + parameters;
   }
 }

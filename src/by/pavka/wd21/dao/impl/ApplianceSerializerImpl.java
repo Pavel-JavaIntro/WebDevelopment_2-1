@@ -1,18 +1,27 @@
-package by.pavka.wd21.service;
+package by.pavka.wd21.dao.impl;
 
-import by.pavka.wd21.exception.ApplianceException;
-import by.pavka.wd21.appliance.*;
+import by.pavka.wd21.dao.ApplianceSerializer;
+import by.pavka.wd21.entity.*;
+import by.pavka.wd21.entity.criteria.Criterion;
+import by.pavka.wd21.entity.provider.ApplianceProvider;
+import by.pavka.wd21.entity.exception.ApplianceException;
 
-public class ApplianceSerializer {
+import java.util.Map;
+
+public class ApplianceSerializerImpl implements ApplianceSerializer {
   private static final String NAME_DELIMITER = " : ";
   private static final String PARAMETER_DELIMITER = ", ";
   private static final String ASSIGNMENT_SIGN = "=";
 
+  private final ApplianceProvider applianceProvider = ApplianceProvider.getInstance();
+
+  @Override
   public String serializeToString(Appliance appliance) {
     if (appliance == null) {
       return null;
     }
-    StringBuilder stringBuilder = new StringBuilder(appliance.name() + NAME_DELIMITER);
+    StringBuilder stringBuilder =
+        new StringBuilder(applianceProvider.getNameForClass(appliance.getClass()) + NAME_DELIMITER);
     String[] parameterNames = appliance.listParameterNames();
     if (parameterNames != null) {
       for (int i = 0; i < parameterNames.length; i++) {
@@ -28,6 +37,7 @@ public class ApplianceSerializer {
     return stringBuilder.toString();
   }
 
+  @Override
   public Appliance deserializeFromSpring(String applianceString) throws ApplianceException {
     if (applianceString == null) {
       return null;
@@ -44,23 +54,28 @@ public class ApplianceSerializer {
     return appliance;
   }
 
-  private Appliance findApplianceType(String typeString) throws ApplianceException {
-    switch (typeString) {
-      case "Speakers":
-        return new Speaker();
-      case "TabletPC":
-        return new TabletPc();
-      case "Laptop":
-        return new Laptop();
-      case "Oven":
-        return new Oven();
-      case "Refrigerator":
-        return new Refrigerator();
-      case "VacuumCleaner":
-        return new VacuumCleaner();
-      default:
-        throw new ApplianceException("Malformed appliance type");
+  @Override
+  public boolean conforms(String applianceString, Criterion criterion) {
+    if (applianceString == null || criterion == null) {
+      return false;
     }
+    boolean conforming = true;
+    String[] searchCriteria = criterionToStringArray(criterion);
+    for (String criteria : searchCriteria) {
+      if (!applianceString.contains(criteria)) {
+        conforming = false;
+        break;
+      }
+    }
+    String applianceName = criterion.getApplianceName();
+    if (applianceName == null || !applianceString.contains(applianceName)) {
+      conforming = false;
+    }
+    return conforming;
+  }
+
+  private Appliance findApplianceType(String typeString) throws ApplianceException {
+    return applianceProvider.getApplianceFromString(typeString);
   }
 
   private void setValue(Appliance appliance, String property) throws ApplianceException {
@@ -74,5 +89,15 @@ public class ApplianceSerializer {
       throw new ApplianceException("Wrong parameter in the String");
     }
     appliance.assignValueForName(parameter, value);
+  }
+
+  private String[] criterionToStringArray(Criterion criterion) {
+    Map<String, String> criteria = criterion.getCriteria();
+    String[] searchCriteria = new String[criteria.size()];
+    int i = 0;
+    for (Map.Entry<String, String> entry : criteria.entrySet()) {
+      searchCriteria[i++] = entry.getKey() + ASSIGNMENT_SIGN + entry.getValue();
+    }
+    return searchCriteria;
   }
 }

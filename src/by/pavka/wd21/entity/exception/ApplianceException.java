@@ -1,4 +1,4 @@
-package by.pavka.wd21.exception;
+package by.pavka.wd21.entity.exception;
 
 public class ApplianceException extends Exception {
   public ApplianceException() {

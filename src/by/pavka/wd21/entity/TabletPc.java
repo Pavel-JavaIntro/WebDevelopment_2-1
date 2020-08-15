@@ -1,6 +1,6 @@
-package by.pavka.wd21.appliance;
+package by.pavka.wd21.entity;
 
-import by.pavka.wd21.exception.ApplianceException;
+import by.pavka.wd21.entity.exception.ApplianceException;
 
 public class TabletPc extends Appliance {
   private static final String[] parameterNames =
@@ -8,13 +8,10 @@ public class TabletPc extends Appliance {
         "BATTERY_CAPACITY", "DISPLAY_INCHES", "MEMORY_ROM", "FLASH_MEMORY_CAPACITY", "COLOR"
       };
 
+  public TabletPc() {}
+
   public TabletPc(String... parameterValues) throws ApplianceException {
     super(parameterValues);
-  }
-
-  @Override
-  public String name() {
-    return "TabletPC";
   }
 
   @Override
