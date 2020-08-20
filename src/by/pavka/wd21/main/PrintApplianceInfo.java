@@ -1,6 +1,5 @@
 package by.pavka.wd21.main;
 
-import by.pavka.wd21.dao.ApplianceSerializer;
 import by.pavka.wd21.dao.SerializerFactory;
 import by.pavka.wd21.entity.Appliance;
 
@@ -14,7 +13,7 @@ public class PrintApplianceInfo {
   }
 
   public static void print(Exception e) {
-    System.out.println("EXCEPTION: ");
+    System.out.println("THROWN EXCEPTION: ");
     e.printStackTrace();
   }
 }

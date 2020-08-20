@@ -17,8 +17,8 @@ public class Main {
     ApplianceSearcher searcher = factory.getApplianceSearcher();
 
     Criterion criterion = new Criterion("Laptop");
-    criterion.add("MEMORY_ROM", "8000");
-    criterion.add("OS", "Linux");
+//    criterion.add("MEMORY_ROM", "8000");
+//    criterion.add("OS", "Linux");
     List<Appliance> appliances;
     try {
       appliances = searcher.find(criterion);
