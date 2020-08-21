@@ -13,15 +13,15 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ApplianceDaoImpl implements ApplianceDao {
-  private final File database = new File(ResourceBundle.getBundle("appliance")
-          .getString("pathname"));
+  private final String database = ResourceBundle.getBundle("appliance")
+          .getString("pathname");
 
   @Override
   public List<Appliance> find(Criterion criterion) throws ApplianceException {
     List<Appliance> appliances = new ArrayList<>();
     ApplianceSerializer applianceSerializer = SerializerFactory.getInstance().getSerializer();
-    try(FileReader fileReader = new FileReader(database); BufferedReader bufferedReader =
-            new BufferedReader(fileReader)) {
+    try(InputStream is = getClass().getResourceAsStream(database); BufferedReader bufferedReader =
+            new BufferedReader(new InputStreamReader(is))) {
         String line;
         while ((line = bufferedReader.readLine()) != null) {
           if (applianceSerializer.conforms(line, criterion)) {

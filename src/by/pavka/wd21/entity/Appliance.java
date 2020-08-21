@@ -4,6 +4,7 @@ import by.pavka.wd21.entity.exception.ApplianceException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public abstract class Appliance {
   private final Map<String, String> parameters = new HashMap<>();
@@ -50,6 +51,23 @@ public abstract class Appliance {
       throw new ApplianceException("Parameter name does not exist");
     }
     parameters.put(parameterName, parameterValue);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Appliance)) {
+      return false;
+    }
+    Appliance appliance = (Appliance) o;
+    return parameters.equals(appliance.parameters);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(parameters);
   }
 
   @Override
