@@ -1,6 +1,6 @@
-package by.pavka.wd21.dao.impl;
+package by.pavka.wd21.parser.impl;
 
-import by.pavka.wd21.dao.ApplianceSerializer;
+import by.pavka.wd21.parser.ApplianceSerializer;
 import by.pavka.wd21.entity.*;
 import by.pavka.wd21.entity.criteria.Criterion;
 import by.pavka.wd21.entity.provider.ApplianceProvider;

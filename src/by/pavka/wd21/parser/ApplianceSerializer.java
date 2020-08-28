@@ -1,4 +1,4 @@
-package by.pavka.wd21.dao;
+package by.pavka.wd21.parser;
 
 import by.pavka.wd21.entity.Appliance;
 import by.pavka.wd21.entity.criteria.Criterion;

@@ -13,6 +13,8 @@ public class ApplianceValidator {
 
   private ApplianceValidator() {}
 
+  // I do think the static method here will not cause problems because Criterion is not a shared
+  // resource and all threads will call this method independently
   public static boolean criteriaValidated(Criterion criterion) throws ApplianceSearcherException {
     ApplianceProvider provider = ApplianceProvider.getInstance();
     String name = criterion.getApplianceName();

@@ -1,11 +1,12 @@
 package by.pavka.wd21.main;
 
-import by.pavka.wd21.dao.SerializerFactory;
+import by.pavka.wd21.parser.SerializerFactory;
 import by.pavka.wd21.entity.Appliance;
 
 public class PrintApplianceInfo {
 
   public static void print(Appliance appliance) {
+    System.out.println("CHOSEN APPLIANCES: ");
     System.out.println(appliance);
     // I know this looks like a violation of the standard pattern. This is only to check output
     System.out.println(SerializerFactory.getInstance().getSerializer().serializeToString(appliance));

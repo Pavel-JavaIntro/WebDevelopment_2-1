@@ -1,6 +1,6 @@
-package by.pavka.wd21.dao;
+package by.pavka.wd21.parser;
 
-import by.pavka.wd21.dao.impl.ApplianceSerializerImpl;
+import by.pavka.wd21.parser.impl.ApplianceSerializerImpl;
 
 public final class SerializerFactory {
   private static final SerializerFactory instance = new SerializerFactory();
